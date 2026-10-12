@@ -1,0 +1,215 @@
+{
+  "name": "ERP Posting Orchestration",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "otp-erp-posting",
+        "responseMode": "lastNode",
+        "options": {}
+      },
+      "id": "w",
+      "name": "Webhook",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [
+        0,
+        0
+      ],
+      "webhookId": "a85e7496-6bb0-4348-ba30-5eb952b238e3"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "http://otp-api:8000/api/v1/internal/workflow-event",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "X-Integration-Key",
+              "value": "={{ $env.N8N_INTEGRATION_KEY }}"
+            }
+          ]
+        },
+        "options": {
+          "timeout": 30000
+        },
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "event_name",
+              "value": "erp_posting"
+            }
+          ]
+        }
+      },
+      "id": "r",
+      "name": "Register Workflow Event",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        280,
+        0
+      ]
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "16cc4885-9d30-40aa-b149-f2574e6458df",
+              "name": "workflow",
+              "value": "ERP Posting Orchestration",
+              "type": "string"
+            },
+            {
+              "id": "7f22010a-b998-40cb-9da9-76251315835d",
+              "name": "status",
+              "value": "IN_PROGRESS",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "s",
+      "name": "Set Correlation Context",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        560,
+        0
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "http://otp-api:8000/api/v1/internal/notify",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "X-Integration-Key",
+              "value": "={{ $env.N8N_INTEGRATION_KEY }}"
+            }
+          ]
+        },
+        "options": {
+          "timeout": 30000
+        },
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "subject",
+              "value": "ERP Posting Orchestration"
+            },
+            {
+              "name": "recipient",
+              "value": "finance@otp.local"
+            }
+          ]
+        }
+      },
+      "id": "n",
+      "name": "Notify Owner",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        840,
+        0
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "http://otp-api:8000/api/v1/internal/workflow-event",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "X-Integration-Key",
+              "value": "={{ $env.N8N_INTEGRATION_KEY }}"
+            }
+          ]
+        },
+        "options": {
+          "timeout": 30000
+        },
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "event_name",
+              "value": "erp_posting_completed"
+            }
+          ]
+        }
+      },
+      "id": "c",
+      "name": "Close Workflow Event",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1120,
+        0
+      ]
+    }
+  ],
+  "connections": {
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "Register Workflow Event",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Register Workflow Event": {
+      "main": [
+        [
+          {
+            "node": "Set Correlation Context",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Set Correlation Context": {
+      "main": [
+        [
+          {
+            "node": "Notify Owner",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Notify Owner": {
+      "main": [
+        [
+          {
+            "node": "Close Workflow Event",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "f7fbb2d5-737b-4ef5-8e52-05450dab8ec9",
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "tags": []
+}

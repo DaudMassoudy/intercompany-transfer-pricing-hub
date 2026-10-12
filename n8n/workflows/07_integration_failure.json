@@ -1,0 +1,215 @@
+{
+  "name": "Integration Failure & Escalation",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "otp-integration-failure",
+        "responseMode": "lastNode",
+        "options": {}
+      },
+      "id": "w",
+      "name": "Webhook",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [
+        0,
+        0
+      ],
+      "webhookId": "1cecd15b-04ba-46df-9397-cb37d07d9da4"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "http://otp-api:8000/api/v1/internal/workflow-event",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "X-Integration-Key",
+              "value": "={{ $env.N8N_INTEGRATION_KEY }}"
+            }
+          ]
+        },
+        "options": {
+          "timeout": 30000
+        },
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "event_name",
+              "value": "integration_failure"
+            }
+          ]
+        }
+      },
+      "id": "r",
+      "name": "Register Workflow Event",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        280,
+        0
+      ]
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "92dc6a59-1322-47cf-b4fb-3fb48c18fe94",
+              "name": "workflow",
+              "value": "Integration Failure & Escalation",
+              "type": "string"
+            },
+            {
+              "id": "0d243239-98d5-4e26-a1e0-af246e98b431",
+              "name": "status",
+              "value": "IN_PROGRESS",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "s",
+      "name": "Set Correlation Context",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        560,
+        0
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "http://otp-api:8000/api/v1/internal/notify",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "X-Integration-Key",
+              "value": "={{ $env.N8N_INTEGRATION_KEY }}"
+            }
+          ]
+        },
+        "options": {
+          "timeout": 30000
+        },
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "subject",
+              "value": "Integration Failure & Escalation"
+            },
+            {
+              "name": "recipient",
+              "value": "demo.admin@otp.local"
+            }
+          ]
+        }
+      },
+      "id": "n",
+      "name": "Notify Owner",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        840,
+        0
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "http://otp-api:8000/api/v1/internal/workflow-event",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "X-Integration-Key",
+              "value": "={{ $env.N8N_INTEGRATION_KEY }}"
+            }
+          ]
+        },
+        "options": {
+          "timeout": 30000
+        },
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "event_name",
+              "value": "integration_failure_completed"
+            }
+          ]
+        }
+      },
+      "id": "c",
+      "name": "Close Workflow Event",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1120,
+        0
+      ]
+    }
+  ],
+  "connections": {
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "Register Workflow Event",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Register Workflow Event": {
+      "main": [
+        [
+          {
+            "node": "Set Correlation Context",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Set Correlation Context": {
+      "main": [
+        [
+          {
+            "node": "Notify Owner",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Notify Owner": {
+      "main": [
+        [
+          {
+            "node": "Close Workflow Event",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "8498c769-3a50-4090-b3c4-6c44343ba118",
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "tags": []
+}

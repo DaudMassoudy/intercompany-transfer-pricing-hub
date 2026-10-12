@@ -1,0 +1,215 @@
+{
+  "name": "Forecast Refresh Orchestration",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "otp-forecast-refresh",
+        "responseMode": "lastNode",
+        "options": {}
+      },
+      "id": "w",
+      "name": "Webhook",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [
+        0,
+        0
+      ],
+      "webhookId": "2263ba3e-75f0-4f32-b62f-86d09fab0ac8"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "http://otp-api:8000/api/v1/internal/workflow-event",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "X-Integration-Key",
+              "value": "={{ $env.N8N_INTEGRATION_KEY }}"
+            }
+          ]
+        },
+        "options": {
+          "timeout": 30000
+        },
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "event_name",
+              "value": "forecast_refresh"
+            }
+          ]
+        }
+      },
+      "id": "r",
+      "name": "Register Workflow Event",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        280,
+        0
+      ]
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "7bff5e10-c6b9-4b1e-b473-f9596f8b05c5",
+              "name": "workflow",
+              "value": "Forecast Refresh Orchestration",
+              "type": "string"
+            },
+            {
+              "id": "f6931908-dfaa-4fa1-9a07-2f8c5f23c10b",
+              "name": "status",
+              "value": "IN_PROGRESS",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "s",
+      "name": "Set Correlation Context",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        560,
+        0
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "http://otp-api:8000/api/v1/internal/notify",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "X-Integration-Key",
+              "value": "={{ $env.N8N_INTEGRATION_KEY }}"
+            }
+          ]
+        },
+        "options": {
+          "timeout": 30000
+        },
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "subject",
+              "value": "Forecast Refresh Orchestration"
+            },
+            {
+              "name": "recipient",
+              "value": "manager@otp.local"
+            }
+          ]
+        }
+      },
+      "id": "n",
+      "name": "Notify Owner",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        840,
+        0
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "http://otp-api:8000/api/v1/internal/workflow-event",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "X-Integration-Key",
+              "value": "={{ $env.N8N_INTEGRATION_KEY }}"
+            }
+          ]
+        },
+        "options": {
+          "timeout": 30000
+        },
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "event_name",
+              "value": "forecast_refresh_completed"
+            }
+          ]
+        }
+      },
+      "id": "c",
+      "name": "Close Workflow Event",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1120,
+        0
+      ]
+    }
+  ],
+  "connections": {
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "Register Workflow Event",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Register Workflow Event": {
+      "main": [
+        [
+          {
+            "node": "Set Correlation Context",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Set Correlation Context": {
+      "main": [
+        [
+          {
+            "node": "Notify Owner",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Notify Owner": {
+      "main": [
+        [
+          {
+            "node": "Close Workflow Event",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "16b33735-3804-40ca-9c2b-f2e159bdc44d",
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "tags": []
+}
