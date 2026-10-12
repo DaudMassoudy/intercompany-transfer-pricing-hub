@@ -1,0 +1,105 @@
+name: ${COMPOSE_PROJECT_NAME:-enterprise-otp-demo-240rc3}
+services:
+  otp-postgres:
+    image: postgres:16.4-alpine3.20
+    environment:
+      POSTGRES_DB: otp
+      POSTGRES_USER: otp
+      POSTGRES_PASSWORD: ${OTP_DB_PASSWORD}
+    volumes: [otp-postgres-data:/var/lib/postgresql/data]
+    healthcheck:
+      test: ["CMD-SHELL", "PGPASSWORD=$${POSTGRES_PASSWORD} psql -h 127.0.0.1 -U $${POSTGRES_USER} -d $${POSTGRES_DB} -tAc 'SELECT 1' | grep -q 1"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+    restart: unless-stopped
+    networks: [otp-backplane]
+  otp-redis:
+    image: redis:7.4.0-alpine3.20
+    command: ["redis-server","--appendonly","yes"]
+    volumes: [otp-redis-data:/data]
+    healthcheck: {test: ["CMD","redis-cli","ping"], interval: 5s, timeout: 3s, retries: 20}
+    restart: unless-stopped
+    networks: [otp-backplane]
+  otp-minio:
+    image: ${MINIO_IMAGE:-dappros/minio:RELEASE.2025-09-07T16-13-09Z}
+    command: server /data --console-address ":9001"
+    environment:
+      MINIO_ROOT_USER: ${MINIO_ROOT_USER}
+      MINIO_ROOT_PASSWORD: ${MINIO_ROOT_PASSWORD}
+    volumes: [otp-minio-data:/data]
+    ports: ["127.0.0.1:${MINIO_CONSOLE_HOST_PORT:-9001}:9001"]
+    healthcheck: {test: ["CMD-SHELL","curl -fsS http://localhost:9000/minio/health/live >/dev/null || exit 1"], interval: 10s, timeout: 5s, retries: 20}
+    restart: unless-stopped
+    networks: [otp-backplane]
+  otp-api:
+    build: ./backend
+    env_file: .env
+    environment:
+      CORS_ORIGINS: http://localhost:${APP_HOST_PORT:-3000}
+      APP_VERSION: 2.4.0-rc.3-hotfix7
+      DATABASE_URL: postgresql+psycopg2://otp:${OTP_DB_PASSWORD}@otp-postgres:5432/otp
+    depends_on:
+      otp-postgres: {condition: service_healthy}
+      otp-redis: {condition: service_healthy}
+    volumes:
+      - otp-app-data:/data
+      - ./documents:/reference-documents:ro
+      - ./docs:/release-docs:ro
+    ports: ["127.0.0.1:${API_HOST_PORT:-8000}:8000"]
+    healthcheck: {test: ["CMD","python","-c","import urllib.request; urllib.request.urlopen('http://localhost:8000/api/v1/health/ready')"], interval: 5s, timeout: 5s, retries: 30}
+    restart: unless-stopped
+    networks: [otp-backplane]
+  otp-worker:
+    build: ./backend
+    command: ["python","-m","app.worker"]
+    env_file: .env
+    environment:
+      DATABASE_URL: postgresql+psycopg2://otp:${OTP_DB_PASSWORD}@otp-postgres:5432/otp
+    depends_on:
+      otp-redis: {condition: service_healthy}
+      otp-postgres: {condition: service_healthy}
+    volumes: [otp-app-data:/data]
+    restart: unless-stopped
+    networks: [otp-backplane]
+  otp-n8n:
+    image: n8nio/n8n:2.39.10
+    environment:
+      N8N_ENCRYPTION_KEY: ${N8N_ENCRYPTION_KEY}
+      N8N_SECURE_COOKIE: ${N8N_SECURE_COOKIE:-false}
+      N8N_DIAGNOSTICS_ENABLED: "false"
+      N8N_PERSONALIZATION_ENABLED: "false"
+      N8N_BLOCK_ENV_ACCESS_IN_NODE: "false"
+      N8N_INTEGRATION_KEY: ${N8N_INTEGRATION_KEY}
+      GENERIC_TIMEZONE: Europe/Berlin
+    volumes:
+      - otp-n8n-data:/home/node/.n8n
+      - ./n8n/workflows:/workflows:ro
+    ports: ["127.0.0.1:${N8N_HOST_PORT:-5678}:5678"]
+    healthcheck: {test: ["CMD-SHELL","wget -qO- http://localhost:5678/healthz >/dev/null || exit 1"], interval: 10s, timeout: 5s, retries: 30}
+    restart: unless-stopped
+    networks: [otp-backplane]
+  otp-frontend:
+    build:
+      context: ./frontend
+      args:
+        NEXT_PUBLIC_API_URL: http://localhost:${API_HOST_PORT:-8000}/api/v1
+        NEXT_PUBLIC_APP_VERSION: 2.4.0-rc.3-hotfix7
+    environment:
+      NEXT_PUBLIC_API_URL: http://localhost:${API_HOST_PORT:-8000}/api/v1
+      NEXT_PUBLIC_APP_VERSION: 2.4.0-rc.3-hotfix7
+    depends_on:
+      otp-api: {condition: service_healthy}
+    ports: ["127.0.0.1:${APP_HOST_PORT:-3000}:3000"]
+    healthcheck: {test: ["CMD-SHELL","wget -qO- http://localhost:3000 >/dev/null || exit 1"], interval: 10s, timeout: 5s, retries: 30}
+    restart: unless-stopped
+    networks: [otp-backplane]
+volumes:
+  otp-postgres-data:
+  otp-redis-data:
+  otp-minio-data:
+  otp-n8n-data:
+  otp-app-data:
+networks:
+  otp-backplane:
+    driver: bridge

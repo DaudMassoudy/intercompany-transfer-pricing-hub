@@ -1,0 +1,26 @@
+services:
+  otp-qualification:
+    build:
+      context: .
+      dockerfile: qualification/Dockerfile
+    environment:
+      APP_HOST_PORT: ${APP_HOST_PORT:-3000}
+      API_HOST_PORT: ${API_HOST_PORT:-8000}
+      APP_TARGET: otp-frontend
+      API_TARGET: otp-api
+    volumes:
+      - ./qualification/results:/qualification/results
+    networks: [otp-backplane]
+    profiles: ["qualification"]
+
+  otp-backend-tests:
+    build:
+      context: .
+      dockerfile: qualification/BackendTest.Dockerfile
+    working_dir: /workspace/backend
+    environment:
+      PYTHONPATH: /workspace/backend
+    volumes:
+      - ./:/workspace
+      - ./qualification/results:/results
+    profiles: ["qualification"]

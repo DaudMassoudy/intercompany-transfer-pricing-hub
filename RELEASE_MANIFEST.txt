@@ -1,0 +1,9 @@
+Intercompany Transfer Pricing Hub v2.4.0-rc.3-hotfix7
+Target: enterprise governance, reviewability and traceability upgrade across operational/control layers; external qualification remains explicit.
+Migration head: 0009_practicality_10 (no Hotfix 7 schema migration required)
+Backend regression: 121 passed
+Frontend source/import validation: PASS
+Static release validation: PASS
+OpenAPI: 148 paths
+Hotfix 7 evidence: docs/HOTFIX7_RELEASE_NOTES.md, docs/HOTFIX7_IMPLEMENTATION_MATRIX.md, docs/HOTFIX7_TEST_REPORT.md, docs/HOTFIX7_QUALIFICATION_REPORT.md, docs/HOTFIX6_TO_HOTFIX7_UPGRADE.md
+External gates: Live SAP, independent penetration test, enterprise/customer IdP, independent Finance/TP UAT, independent TP sign-off, production DR/parallel close as applicable.

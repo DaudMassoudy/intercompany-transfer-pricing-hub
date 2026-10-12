@@ -1,0 +1,34 @@
+# Never commit local runtime secrets or credentials
+.env
+.env.*
+!.env.example
+!.env.demo
+*.pem
+*.key
+*.p12
+*.pfx
+secrets/
+# Local state and backups
+*.log
+*.bak
+*.db
+*.sqlite3
+backups/
+qualification/results/
+# Python
+__pycache__/
+.pytest_cache/
+.coverage*
+htmlcov/
+.venv/
+venv/
+*.py[cod]
+# JS / Next
+node_modules/
+.next/
+*.tsbuildinfo
+# IDE / OS
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
