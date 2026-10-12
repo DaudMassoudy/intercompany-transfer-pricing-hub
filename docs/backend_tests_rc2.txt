@@ -1,0 +1,9 @@
+........................................................................ [ 62%]
+............................................                             [100%]
+=============================== warnings summary ===============================
+tests/test_practicality_10.py::test_generic_workflow_sequential_engine_and_delegation
+  /mnt/data/otp_v242_work/Enterprise_OTP_Platform_v2.4.0-rc.3/backend/tests/test_practicality_10.py:80: DeprecationWarning: datetime.datetime.utcnow() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.now(datetime.UTC).
+    now=datetime.utcnow();d=client.post('/api/v1/workflow-engine/delegations',headers=auth(manager_token),json={'to_user':'finance@otp.local','role':'TP_MANAGER','effective_from':now.isoformat(),'effective_to':(now+timedelta(days=1)).isoformat()});assert d.status_code==200,d.text
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+116 passed, 1 warning in 9.47s

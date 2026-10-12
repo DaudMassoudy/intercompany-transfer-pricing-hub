@@ -1,0 +1,3 @@
+Enterprise OTP Platform v2.0.0-rc.5 backend regression
+Command: PYTHONPATH=. pytest -q
+Result: 100 passed in 7.45s

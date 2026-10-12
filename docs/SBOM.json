@@ -1,0 +1,143 @@
+{
+  "format": "Enterprise-OTP-direct-dependency-SBOM",
+  "version": 1,
+  "application": {
+    "name": "Enterprise Operational Transfer Pricing Platform",
+    "version": "2.0.0-rc.1"
+  },
+  "python": [
+    {
+      "ecosystem": "PyPI",
+      "name": "fastapi",
+      "version": "0.128.2"
+    },
+    {
+      "ecosystem": "PyPI",
+      "name": "uvicorn[standard]",
+      "version": "0.48.0"
+    },
+    {
+      "ecosystem": "PyPI",
+      "name": "SQLAlchemy",
+      "version": "2.0.50"
+    },
+    {
+      "ecosystem": "PyPI",
+      "name": "psycopg2-binary",
+      "version": "2.9.10"
+    },
+    {
+      "ecosystem": "PyPI",
+      "name": "pydantic",
+      "version": "2.13.4"
+    },
+    {
+      "ecosystem": "PyPI",
+      "name": "pydantic-settings",
+      "version": "2.14.1"
+    },
+    {
+      "ecosystem": "PyPI",
+      "name": "python-multipart",
+      "version": "0.0.29"
+    },
+    {
+      "ecosystem": "PyPI",
+      "name": "pandas",
+      "version": "2.2.3"
+    },
+    {
+      "ecosystem": "PyPI",
+      "name": "openpyxl",
+      "version": "3.1.5"
+    },
+    {
+      "ecosystem": "PyPI",
+      "name": "redis",
+      "version": "6.4.0"
+    },
+    {
+      "ecosystem": "PyPI",
+      "name": "httpx",
+      "version": "0.28.1"
+    },
+    {
+      "ecosystem": "PyPI",
+      "name": "alembic",
+      "version": "1.18.4"
+    },
+    {
+      "ecosystem": "PyPI",
+      "name": "PyJWT",
+      "version": "2.13.0"
+    },
+    {
+      "ecosystem": "PyPI",
+      "name": "argon2-cffi",
+      "version": "25.1.0"
+    }
+  ],
+  "javascript": [
+    {
+      "ecosystem": "npm",
+      "name": "next",
+      "version": "15.5.2",
+      "scope": "runtime"
+    },
+    {
+      "ecosystem": "npm",
+      "name": "react",
+      "version": "19.1.1",
+      "scope": "runtime"
+    },
+    {
+      "ecosystem": "npm",
+      "name": "react-dom",
+      "version": "19.1.1",
+      "scope": "runtime"
+    },
+    {
+      "ecosystem": "npm",
+      "name": "typescript",
+      "version": "5.9.2",
+      "scope": "development"
+    },
+    {
+      "ecosystem": "npm",
+      "name": "@types/node",
+      "version": "24.3.0",
+      "scope": "development"
+    },
+    {
+      "ecosystem": "npm",
+      "name": "@types/react",
+      "version": "19.1.10",
+      "scope": "development"
+    },
+    {
+      "ecosystem": "npm",
+      "name": "@types/react-dom",
+      "version": "19.1.7",
+      "scope": "development"
+    }
+  ],
+  "container_images": [
+    {
+      "service": "otp-postgres",
+      "image": "postgres:16.4-alpine3.20"
+    },
+    {
+      "service": "otp-redis",
+      "image": "redis:7.4.0-alpine3.20"
+    },
+    {
+      "service": "otp-minio",
+      "image": "${MINIO_IMAGE:-quay.io/minio/minio:RELEASE.2025-09-07T16-13-09Z}"
+    },
+    {
+      "service": "otp-n8n",
+      "image": "n8nio/n8n:2.39.10"
+    }
+  ],
+  "note": "Direct-dependency SBOM. A production CI pipeline should generate a full transitive SPDX/CycloneDX SBOM after dependency resolution."
+}

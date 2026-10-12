@@ -1,0 +1,56 @@
+........................................................................ [ 62%]
+............................................                             [100%]
+=============================== warnings summary ===============================
+tests/test_practicality_10.py::test_generic_workflow_sequential_engine_and_delegation
+  /mnt/data/otp_v230/Enterprise_OTP_Platform_v2.4.0-rc.3/backend/tests/test_practicality_10.py:80: DeprecationWarning: datetime.datetime.utcnow() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.now(datetime.UTC).
+    now=datetime.utcnow();d=client.post('/api/v1/workflow-engine/delegations',headers=auth(manager_token),json={'to_user':'finance@otp.local','role':'TP_MANAGER','effective_from':now.isoformat(),'effective_to':(now+timedelta(days=1)).isoformat()});assert d.status_code==200,d.text
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+================================ tests coverage ================================
+_______________ coverage: platform linux, python 3.13.5-final-0 ________________
+
+Name                                  Stmts   Miss  Cover   Missing
+-------------------------------------------------------------------
+app/__init__.py                           0      0   100%
+app/base.py                               2      0   100%
+app/db.py                                15      0   100%
+app/main.py                              31      1    97%   14
+app/models.py                           912      0   100%
+app/routers/__init__.py                   0      0   100%
+app/routers/accounting.py               111     16    86%   28, 34, 36, 48-49, 64, 80-81, 94, 103-106, 123-125
+app/routers/allocations.py              192     44    77%   110-118, 122-124, 128-130, 134-136, 151-157, 161-169, 215, 223-227, 231-236
+app/routers/approvals.py                 70     11    84%   57, 69-78
+app/routers/auth.py                      30      7    77%   17-21, 31, 35
+app/routers/dashboard.py                 50      9    82%   47-55
+app/routers/enterprise_ops.py           290     40    86%   33, 36, 83, 113, 116-118, 171-179, 193-201, 217, 224, 228, 252-253, 271, 311-316, 328, 344, 362-363
+app/routers/governance.py                90     29    68%   55-58, 66-73, 77-80, 84-85, 94-105
+app/routers/health.py                    17      2    88%   15-16
+app/routers/imports.py                   46     27    41%   16-30, 34-35, 39-44, 48-51
+app/routers/internal.py                  90     49    46%   20-21, 24-25, 28, 32, 36-37, 41, 45-47, 51-64, 68-73, 77-80, 84-88, 92, 96-101, 105
+app/routers/mapping.py                   45     17    62%   24-25, 29-33, 37-42, 46-47, 51-52
+app/routers/master_data.py              213     62    71%   57, 73-75, 85, 94-95, 104-105, 111-117, 123, 129, 131, 170-177, 186, 191, 198-204, 209, 218-219, 228-229, 235-241, 247, 251-263
+app/routers/operational.py              148     66    55%   22-46, 50-66, 87, 95, 118-123, 132-135, 139-140, 153, 159-168
+app/routers/practical10.py              473    130    73%   95-98, 119, 140-142, 195-231, 256-257, 263-272, 287-297, 303-305, 385-393, 414-416, 427-432, 449-455, 467-468, 478-485, 517-518, 524-527, 536-543, 548-551, 575-577, 608, 611, 624-628
+app/security.py                          82     18    78%   67-70, 82, 99-104, 108, 114-118, 122
+app/seed.py                             136      0   100%
+app/services/allocations.py             127      5    96%   37, 49, 55, 106, 108
+app/services/audit.py                     9      0   100%
+app/services/benchmarks.py               33      4    88%   16, 19, 39, 46
+app/services/entity_master.py           155     13    92%   42, 72, 80, 112, 155, 160-162, 172-174, 202-203
+app/services/erp.py                      36      0   100%
+app/services/finance.py                 156      6    96%   42, 91, 172-174, 182
+app/services/forecasting.py              20      2    90%   9, 23
+app/services/ingestion.py                67      2    97%   28, 53
+app/services/mapping.py                  49      4    92%   15, 42, 45, 49
+app/services/master_data_catalog.py     238     66    72%   140, 154, 161-162, 180, 188, 190-192, 194-196, 202-205, 240, 245-247, 251-254, 270-273, 275-278, 280-283, 299-324, 333-334, 346, 358, 361, 375-376, 378-379
+app/services/pnl_builder.py             118     22    81%   42-43, 50, 71, 73, 78, 83, 131, 156-157, 173-184
+app/services/qualification.py            14      0   100%
+app/services/variance.py                118     63    47%   18-20, 36-38, 43, 47-53, 57-61, 65-76, 81-92, 96-103, 113-123, 130-131
+app/services/workflows.py                55      5    91%   13, 16, 38, 40, 75
+app/settings.py                          35      3    91%   29, 33, 36
+app/timeutil.py                           3      0   100%
+app/worker.py                             8      8     0%   1-8
+-------------------------------------------------------------------
+TOTAL                                  4284    731    83%
+Coverage XML written to file /mnt/data/otp_v230/Enterprise_OTP_Platform_v2.4.0-rc.3/docs/coverage.xml
+116 passed, 1 warning in 13.11s

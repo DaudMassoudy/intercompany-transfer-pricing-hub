@@ -1,0 +1,49 @@
+........................................................................ [ 65%]
+......................................                                   [100%]
+================================ tests coverage ================================
+_______________ coverage: platform linux, python 3.13.5-final-0 ________________
+
+Name                                  Stmts   Miss  Cover   Missing
+-------------------------------------------------------------------
+app/__init__.py                           0      0   100%
+app/base.py                               2      0   100%
+app/db.py                                15      0   100%
+app/main.py                              31      1    97%   14
+app/models.py                           782      0   100%
+app/routers/__init__.py                   0      0   100%
+app/routers/accounting.py               111     17    85%   28, 34, 36, 48-49, 64, 80-81, 94, 103-106, 110, 123-125
+app/routers/allocations.py              192     44    77%   110-118, 122-124, 128-130, 134-136, 151-157, 161-169, 215, 223-227, 231-236
+app/routers/approvals.py                 70     12    83%   22, 57, 69-78
+app/routers/auth.py                      30      8    73%   17-21, 27, 31, 35
+app/routers/dashboard.py                 50     14    72%   39-43, 47-55
+app/routers/enterprise_ops.py           290     40    86%   33, 36, 80, 110, 113-115, 168-176, 190-198, 214, 221, 225, 249-250, 267, 304-309, 321, 337, 355-356
+app/routers/governance.py                90     29    68%   55-58, 66-73, 77-80, 84-85, 94-105
+app/routers/health.py                    17      2    88%   15-16
+app/routers/imports.py                   46     27    41%   16-30, 34-35, 39-44, 48-51
+app/routers/internal.py                  90     49    46%   20-21, 24-25, 28, 32, 36-37, 41, 45-47, 51-64, 68-73, 77-80, 84-88, 92, 96-101, 105
+app/routers/mapping.py                   45     17    62%   24-25, 29-33, 37-42, 46-47, 51-52
+app/routers/master_data.py              213     62    71%   57, 73-75, 85, 94-95, 104-105, 111-117, 123, 129, 131, 170-177, 186, 191, 198-204, 209, 218-219, 228-229, 235-241, 247, 251-263
+app/routers/operational.py              148     68    54%   22-46, 50-66, 87, 95, 118-123, 127-128, 132-135, 139-140, 153, 159-168
+app/security.py                          69     18    74%   65-68, 74, 89-94, 98, 101-105, 109
+app/seed.py                             136      0   100%
+app/services/allocations.py             116      3    97%   37, 49, 55
+app/services/audit.py                     9      0   100%
+app/services/benchmarks.py               33      4    88%   16, 19, 39, 46
+app/services/entity_master.py           155     13    92%   42, 72, 80, 112, 155, 160-162, 172-174, 202-203
+app/services/erp.py                      36      0   100%
+app/services/finance.py                 156      6    96%   42, 91, 172-174, 182
+app/services/forecasting.py              20      2    90%   9, 23
+app/services/ingestion.py                67      2    97%   28, 53
+app/services/mapping.py                  49      4    92%   15, 42, 45, 49
+app/services/master_data_catalog.py     225     53    76%   138, 152, 159-160, 178, 186, 188-190, 192-194, 200-203, 238, 243-245, 249-252, 268-271, 273-276, 278-281, 297-306, 315-316, 328, 340, 343, 357-358, 360-361
+app/services/pnl_builder.py             118     22    81%   42-43, 50, 71, 73, 78, 83, 131, 156-157, 173-184
+app/services/qualification.py            14      0   100%
+app/services/variance.py                 63     19    70%   18-20, 36-38, 42-49, 58-63
+app/services/workflows.py                29      5    83%   13, 16, 31, 33, 37
+app/settings.py                          35      3    91%   29, 33, 36
+app/timeutil.py                           3      0   100%
+app/worker.py                             8      8     0%   1-8
+-------------------------------------------------------------------
+TOTAL                                  3563    552    85%
+Coverage XML written to file /mnt/data/otp_v22_work/Enterprise_OTP_Platform_v2.1.0-rc.1/docs/coverage.xml
+110 passed in 10.41s
