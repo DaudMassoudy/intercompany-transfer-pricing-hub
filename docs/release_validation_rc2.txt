@@ -1,0 +1,78 @@
+[PASS] required files: all present
+[PASS] no transient artifacts: clean
+[PASS] no packaged runtime database: clean
+[PASS] no packaged .env secret file: clean
+[PASS] n8n 01_monthly_otp_close.json structure: nodes=17
+[PASS] n8n 02_true_up_approval.json structure: nodes=5
+[PASS] n8n 03_erp_posting.json structure: nodes=5
+[PASS] n8n 04_policy_lifecycle.json structure: nodes=5
+[PASS] n8n 05_document_ingestion.json structure: nodes=5
+[PASS] n8n 06_forecast_refresh.json structure: nodes=5
+[PASS] n8n 07_integration_failure.json structure: nodes=5
+[PASS] OpenAPI JSON: valid JSON
+[PASS] compose services: 7 services
+[PASS] container images pinned: all explicit versions
+[PASS] frontend dynamic host port: dynamic 3000 fallback wired
+[PASS] API dynamic host port: dynamic 8000 fallback wired
+[PASS] n8n dynamic host port: dynamic 5678 fallback wired
+[PASS] MinIO console dynamic host port: dynamic 9001 fallback wired
+[PASS] compose secrets loaded from generated env: launcher process pins Compose interpolation to .env
+[PASS] postgres stale-volume credential repair: password synchronized then verified over TCP
+[PASS] authenticated postgres healthcheck: DB healthcheck validates credentials
+[PASS] API DB password source aligned: API and worker use same Compose-resolved password as PostgreSQL
+[PASS] launcher runs DB credential preflight: one-click launcher repairs/verifies DB credentials
+[PASS] START_OTP loads release secrets: direct launcher loads .env secrets before PostgreSQL preflight
+[PASS] DB preflight self-load fallback: credential preflight can self-load .env when invoked independently
+[PASS] DB preflight uses SQL readiness not pg_isready: first-start gate waits for a real SQL statement
+[PASS] DB preflight retries role synchronization: transient initialization race is retried instead of failing immediately
+[PASS] DB preflight preserves diagnostics: real PostgreSQL errors are preserved for Windows troubleshooting
+[PASS] Python dependencies pinned: 
+[PASS] frontend direct dependencies pinned: all exact
+[PASS] frontend package version: package=2.4.0-rc.3 root=2.4.0-rc.3
+[PASS] version marker START_DEMO.bat: 2.4.0-rc.3 present
+[PASS] version marker frontend/Dockerfile: 2.4.0-rc.3 present
+[PASS] version marker frontend/components/Shell.tsx: 2.4.0-rc.3 present
+[PASS] version marker backend/app/settings.py: 2.4.0-rc.3 present
+[PASS] version marker .env.example: 2.4.0-rc.3 present
+[PASS] version marker docker-compose.yml: 2.4.0-rc.3 present
+[PASS] German localisation dictionaries: DE/EN dictionaries and locale helpers present
+[PASS] persistent language switch: DE/EN switch and local persistence present
+[PASS] German localisation docs: German user and technical documentation present
+[PASS] entity master maker-checker: approval separation implemented
+[PASS] entity master version history: versioned history endpoint present
+[PASS] entity master bulk preview: controlled Excel preview with no implicit deletion
+[PASS] entity master UI maintenance: add/edit/import/review UI present
+[PASS] enterprise master-data domains: governed catalog domains present
+[PASS] generic master maker-checker: domain-neutral maker-checker/versioning present
+[PASS] master catalog UI: create/edit/lifecycle/import UI present
+[PASS] master activation affects operations: deactivation propagates to operational master projections
+[PASS] allocation configurable lifecycle: draft/review/approve/activate/simulate/execute endpoints present
+[PASS] allocation demo UX removed: primary UI uses configurable rules
+[PASS] allocation control features: configurable source/driver/recipient/markup/FX metadata persisted
+[PASS] benchmark comparable engine: comparable screening, observations, deterministic quartiles and governed staging present
+[PASS] multi-stage allocation engine: arbitrary staged allocation with cycle protection implemented
+[PASS] dynamic workflow resolution: governed workflow definition is pinned to approval request
+[PASS] journal-template execution: journal GL determination uses governed template when available
+[PASS] reconciliation exception and certification: differences create cases and reconciled records support sign-off
+[PASS] evidence pack generation: transaction evidence ZIP endpoint present
+[PASS] master dependency impact: blocking dependency preview/guard present
+[PASS] audit explorer filtering: filterable object/correlation audit reconstruction present
+[PASS] sample XLSX integrity: 19 workbooks, 4731 data rows
+[PASS] reference PDF integrity: 6 PDFs
+[PASS] production env uses secret placeholders: expected placeholders/DEMO_MODE=false
+[PASS] policy workbench lifecycle: editable/versioned maker-checker policy workbench
+[PASS] pnl cube snapshot locking: multidimensional P&L plus controlled snapshots
+[PASS] true-up batch reversal: deterministic batch/reversal endpoints
+[PASS] workflow full lifecycle: version-pinned approval engine with SLA/escalation
+[PASS] reconciliation stage control: stage-level reconciliation and exception generation
+[PASS] service account security: hashed scoped integration credentials and UI
+[PASS] qualification evidence registry: release evidence is persisted and mounted read-only
+[PASS] variance comparison breadth: deterministic expanded comparison/driver support
+[PASS] one-click local 10/10 qualifier: Windows one-click qualifier orchestrates runtime, backend, browser and report
+[PASS] browser qualification covers all target layers: all 15 workbenches have live browser checks
+[PASS] live API qualification breadth: deep live API UAT spans all 15 target layers
+[PASS] qualification runner isolated: qualification-only Docker services do not alter normal startup path
+[PASS] qualification browser uses private backplane: browser preserves localhost CORS origin while forwarding to live Compose services
+[PASS] qualification direct dependencies pinned: all exact
+
+Release validation PASS — version 2.4.0-rc.3; files=320; n8n_nodes=47

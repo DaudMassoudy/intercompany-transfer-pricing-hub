@@ -1,0 +1,7 @@
+Targeted TypeScript validation for RC.1 new pages:
+- frontend/app/master-data/page.tsx
+- frontend/app/allocations/page.tsx
+Host compiler: TypeScript 5.8.3
+Method: noEmit parse/type check with temporary declarations for unavailable installed React/Next modules.
+Result: PASS
+Full Next.js production build: NOT EXECUTED because project dependencies were not installed and npm install timed out in this environment.

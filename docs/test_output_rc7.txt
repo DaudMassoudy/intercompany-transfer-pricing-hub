@@ -1,0 +1,43 @@
+........................................................................ [ 80%]
+..................                                                       [100%]
+================================ tests coverage ================================
+_______________ coverage: platform linux, python 3.13.5-final-0 ________________
+
+Name                            Stmts   Miss  Cover   Missing
+-------------------------------------------------------------
+app/__init__.py                     0      0   100%
+app/base.py                         2      0   100%
+app/db.py                          15      0   100%
+app/main.py                        31      1    97%   14
+app/models.py                     648      0   100%
+app/routers/__init__.py             0      0   100%
+app/routers/accounting.py          75     10    87%   31, 44, 60-61, 70, 79-82, 86
+app/routers/allocations.py         34     14    59%   20-23, 27-31, 35-39
+app/routers/approvals.py           68     12    82%   21, 54, 66-75
+app/routers/auth.py                30      8    73%   17-21, 27, 31, 35
+app/routers/dashboard.py           50     14    72%   39-43, 47-55
+app/routers/governance.py          77     31    60%   16-17, 39-42, 50-57, 61-64, 68-69, 78-89
+app/routers/health.py              17      2    88%   15-16
+app/routers/imports.py             46     27    41%   16-30, 34-35, 39-44, 48-51
+app/routers/internal.py            90     49    46%   20-21, 24-25, 28, 32, 36-37, 41, 45-47, 51-64, 68-73, 77-80, 84-88, 92, 96-101, 105
+app/routers/mapping.py             45     17    62%   24-25, 29-33, 37-42, 46-47, 51-52
+app/routers/operational.py        148     75    49%   22-46, 50-66, 87, 95, 99-103, 107-108, 118-123, 127-128, 132-135, 139-140, 153, 159-168
+app/security.py                    69     18    74%   64-67, 73, 88-93, 97, 100-104, 108
+app/seed.py                       123      0   100%
+app/services/allocations.py        16      0   100%
+app/services/audit.py               9      0   100%
+app/services/erp.py                34      0   100%
+app/services/finance.py           156      6    96%   42, 91, 172-174, 182
+app/services/forecasting.py        20      2    90%   9, 23
+app/services/ingestion.py          67      2    97%   28, 53
+app/services/mapping.py            49      4    92%   15, 42, 45, 49
+app/services/pnl_builder.py       118     22    81%   42-43, 50, 71, 73, 78, 83, 131, 156-157, 173-184
+app/services/qualification.py      14      0   100%
+app/services/variance.py           63     19    70%   18-20, 36-38, 42-49, 58-63
+app/settings.py                    35      3    91%   29, 33, 36
+app/timeutil.py                     3      0   100%
+app/worker.py                       8      8     0%   1-8
+-------------------------------------------------------------
+TOTAL                            2160    344    84%
+Coverage XML written to file ../docs/coverage.xml
+90 passed in 11.97s
